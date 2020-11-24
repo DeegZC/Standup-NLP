@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<style>
+      body,p,h3 {font-family: 'Varela Round', sans-serif !important;}
+</style>
+
+<html>
+
+<head>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" >
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <title>Comic Search</title>
+</head>
+
+<body>
+  {% include 'nav.html' %}
+  <br><br>
+
+
+  <div class="column">
+    <div class="container">
+        <table>
+          <tr>
+            <td>First Name</td>
+            <td><input type="text" id="fname"/></td>
+          </tr>
+          <tr>
+            <td>Last Name</td>
+            <td><input type="text" id="lname"/></td>
+          </tr>
+          <!--tr>
+          <td></td>
+          <td><input type="submit" class="block" value="Search for a Friend"
+              style="background: rgb(56, 184, 56)"></input></td>
+        </tr-->
+        </table>
+    </div>
+    
+
+    <div class="column">
+      <span id="recSpan"></span>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
+    </script>
+    <script>
+
+      'use strict';
+
+      function handleResponse(response) {
+        $('#recSpan').html(response);
+      }
+
+      let requestRecs = null;
+
+      function getResults() {
+        let f = encodeURIComponent($('#fname').val());
+        let l = encodeURIComponent($('#lname').val());
+
+        let url = '/comicSearchResults?fname=' + f + '&lname=' + l;
+
+        let data = {};
+
+        if (requestRecs != null)
+          requestRecs.abort();
+
+        requestRecs = $.ajax(
+          {
+            type: 'POST',
+            url: url,
+            data: data,
+            success: handleResponse
+          }
+        );
+      }
+
+      function setup() {
+        $('#fname').focus();
+        $('#fname').on('input', getResults);
+        $('#lname').on('input', getResults);
+        getResults();
+      }
+
+      $('document').ready(setup);
+
+    </script>
+</body>
+
+</html>

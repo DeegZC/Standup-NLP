@@ -1,0 +1,11 @@
+{% if comics|length%}
+<p style="text-align:center">{{results}} Results in {{time}} seconds</p>
+{% for s in comics%}
+    <p>{{s}}</p>
+    <br><br>
+{% endfor %}
+{%else%}
+<h2>No Matching Comics</h2>
+<br>
+<h3>Check for typos!</h3>
+{%endif%}
