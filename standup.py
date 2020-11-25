@@ -34,8 +34,11 @@ def favicon():
 def home():
     if 'warned' in request.args['warned']:
         session['warned']=True
+        print('found warned')
     if 'warned' not in session:
         redirect('warning')
+        print('redirecting')
+    print('passed tests. now rendering')
     return make_response(render_template('index.html'))
     
 #-----------------------------------------------------------------------
