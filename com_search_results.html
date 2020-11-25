@@ -1,8 +1,13 @@
 {% if comics|length%}
 <p style="text-align:center">{{results}} Results in {{time}} seconds</p>
 {% for s in comics%}
-    <p>{{s}}</p>
-    <br><br>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.name}}" aria-expanded="false" aria-controls="collapseExample">
+        {{s.name.title()}}
+    </button>
+    <div class="collapse" id={{s.name}}>
+        <div class="card card-body">{{s}}</div>
+    </div>
+    <br>
 {% endfor %}
 {%else%}
 <h2>No Matching Comics</h2>

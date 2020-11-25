@@ -42,10 +42,10 @@ Race:     {self.race}\n\
 Specials:'''.format(self=self)
         for s in self.specials:
             display+='\n- '+s.title()
-        supp =  '\nTotal Words:         '+self.words+\
-                '\nTotal Unique Words:  '+self.uwords+\
-                '\nTotal Runtime:       '+self.runtime+\
-                '\nWords/Minute         '+self.wpm+\
-                '\nUnique Words/Minute  '+self.uwpm+\
-                '\nAverage Rating       '+self.rating
+        supp =  '\nTotal Words:         '+str(self.words)+\
+                '\nTotal Unique Words:  '+str(self.uwords)+\
+                '\nTotal Runtime:       '+str(self.runtime)+\
+                '\nWords/Minute         '+str(self.wpm)+\
+                '\nUnique Words/Minute  '+str(self.uwpm)+\
+                '\nAverage Rating       '+str(self.rating)
         return display+supp
