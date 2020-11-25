@@ -21,9 +21,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 db = Database(app)
-def checkWarned():
-    if 'warned' not in session:
-        redirect('warning')
 
 @app.route('/favicon.ico')
 def favicon():
@@ -35,10 +32,10 @@ def favicon():
 @app.route('/home', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def home():
-    print('did a thing')
     if 'warned' in request.args['warned']:
         session['warned']=True
-    checkWarned()
+    if 'warned' not in session:
+        redirect('warning')
     return make_response(render_template('index.html'))
     
 #-----------------------------------------------------------------------
@@ -49,7 +46,9 @@ def warning():
 #-----------------------------------------------------------------------
 @app.route('/comicSearch', methods=['GET','POST'])
 def comicSearch():
-    checkWarned()
+    if 'warned' not in session:
+        redirect('warning')
+
     return make_response(render_template('com_search.html'))
 
 #-----------------------------------------------------------------------
@@ -57,7 +56,8 @@ def comicSearch():
 @app.route('/comicSearchResults', methods=['POST','GET'])
 def comicSearchResults():
     t0 = time.perf_counter()
-    checkWarned()
+    if 'warned' not in session:
+        redirect('warning')
     db.connect()
     comics = db.getComByName(request.args['fname'],request.args['lname'])
 
