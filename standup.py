@@ -35,7 +35,7 @@ def favicon():
 @app.route('/home', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def home():
-    if request.form['warned']:
+    if 'warned' in request.args['warned']:
         session['warned']=True
     checkWarned()
     return make_response(render_template('index.html'))
