@@ -15,7 +15,7 @@ import time
 #-----------------------------------------------------------------------
 import os
 from flask import send_from_directory
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 app.config.from_object(Config)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
