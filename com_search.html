@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" >
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <title>Comic Search</title>
+  <title>Standup Comedy NLP</title>
 </head>
 
 <body>
@@ -35,12 +35,10 @@
               style="background: rgb(56, 184, 56)"></input></td>
         </tr-->
         </table>
+      <span id="recSpan"></span>
     </div>
     
 
-    <div class="column">
-      <span id="recSpan"></span>
-    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
     </script>
     <script>
@@ -54,12 +52,11 @@
       let requestRecs = null;
 
       function getResults() {
-        let f = encodeURIComponent($('#fname').val());
-        let l = encodeURIComponent($('#lname').val());
-
-        let url = '/comicSearchResults?fname=' + f + '&lname=' + l;
+        let url = '/comicSearchResults';
 
         let data = {};
+        data['fname'] = $('#fname').val()
+        data['lname'] = $('#lname').val()
 
         if (requestRecs != null)
           requestRecs.abort();

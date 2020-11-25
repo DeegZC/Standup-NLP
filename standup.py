@@ -26,18 +26,21 @@ db = Database(app)
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+def checkWarned():
+    print(session)
+    if 'warned' not in session:
+        redirect('warning')
+        print('redirecting to warn')
+
 #-----------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def home():
-    if 'warned' in request.args:
+    if request.args.get('warned'):
         session['warned']=True
         print('found warned')
-    if 'warned' not in session:
-        redirect('warning')
-        print('redirecting')
     print('passed tests. now rendering')
     return make_response(render_template('index.html'))
     
@@ -49,20 +52,17 @@ def warning():
 #-----------------------------------------------------------------------
 @app.route('/comicSearch', methods=['GET','POST'])
 def comicSearch():
-    if 'warned' not in session:
-        redirect('warning')
-
+    checkWarned()
     return make_response(render_template('com_search.html'))
 
 #-----------------------------------------------------------------------
 
 @app.route('/comicSearchResults', methods=['POST','GET'])
 def comicSearchResults():
+    checkWarned()
     t0 = time.perf_counter()
-    if 'warned' not in session:
-        redirect('warning')
     db.connect()
-    comics = db.getComByName(request.args['fname'],request.args['lname'])
+    comics = db.getComByName(request.form['fname'],request.form['lname'])
 
     html = render_template('com_search_results.html',
         comics = comics,
