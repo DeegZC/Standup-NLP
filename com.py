@@ -14,7 +14,7 @@ rating real,
 top_words text[])
 '''
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Text, ARRAY, Real
+from sqlalchemy import Column, Integer, Text, ARRAY, REAL
 
 Base = declarative_base()
 
@@ -28,9 +28,9 @@ class Com(Base):
     words = Column(Integer)
     uwords = Column(Integer)
     runtime = Column(Integer)
-    wpm = Column(Real)
-    uwpm = Column(Real)
-    rating = Column(Real)
+    wpm = Column(REAL)
+    uwpm = Column(REAL)
+    rating = Column(REAL)
     top_words = Column(ARRAY(Text))
 
     def __str__(self):
