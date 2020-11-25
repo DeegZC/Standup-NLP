@@ -40,5 +40,5 @@ class Database:
         if fname:
             hits = [h for h in hits if fname.lower() in h.name.split(' ')[0]]
         if lname:
-            hits = [h for h in hits if lname.lower() in h.name.split(' ')[0]]
+            hits = [h for h in hits if lname.lower() in h.name.split(' ')[-1]]
         return hits
