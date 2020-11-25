@@ -32,7 +32,7 @@ def favicon():
 @app.route('/home', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def home():
-    if 'warned' in request.args['warned']:
+    if 'warned' in request.args:
         session['warned']=True
         print('found warned')
     if 'warned' not in session:
