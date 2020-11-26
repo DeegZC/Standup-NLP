@@ -33,11 +33,11 @@ def favicon():
 @app.route('/home', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def home():
-    if 'warned' not in session:
-        return redirect('warning')
     if request.args.get('warned'):
         session['warned']=True
         print('found warned')
+    if 'warned' not in session:
+        return redirect('warning')
     print('passed tests. now rendering')
     return make_response(render_template('index.html'))
     
