@@ -4,10 +4,11 @@
 {% for s in comics%}
     <tr><td>
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.name}}" aria-expanded="false" aria-controls="{{s.name}}">
-        {{s.name.title()}}
+        {{s.name.title().replace('_',' ')}}
     </button>
     <div class="collapse" id="{{s.name}}">
-        <div class="card card-body">{{s}}</div>
+        <br>
+        <div class="card card-body">{{str(s).replace('\n','<br>')}}</div>
     </div>
     </td></tr>
 {% endfor %}
