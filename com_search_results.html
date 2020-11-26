@@ -8,7 +8,13 @@
     </button>
     <div class="collapse" id="{{s.id}}">
         <br>
-        <div class="card card-body">{{s.overview}}</div>
+        <div class="card card-body">
+        <table class='table'>
+            {%for o in s.overview%}
+            <tr><td>{{o}}</td></tr>
+            {%endfor%}
+        </table>
+        </div>
     </div>
     </td></tr>
 {% endfor %}

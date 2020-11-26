@@ -13,7 +13,9 @@
 <body>
     {% include 'nav.html' %}
 </body>
-<div class="center">
+
+<center>
+<div class="container">
 <h1>Make a Word Cloud</h1>
 
 <input type='number' id="threshold" method="post" step='1' min='0' max='250'
@@ -26,8 +28,8 @@
     {%endfor%}
 </select>
 <button type="button" class="btn btn-primary" id='submit'>Generate Word Cloud</button>
-
 </div>
+</center>
 
 <br>
       <span id="word_cloud"></span>
@@ -42,6 +44,7 @@
     let requestRecs = null;
 
     function getResults() {
+    console.log('getting results')
     let url = '/makeWordCloud';
 
     let data = {};
@@ -62,8 +65,7 @@
     }
 
     function setup() {
-    $('#submit').focus();
-    $('#submit').on('input', getResults);
+    $('#submit').on('click', getResults);
     }
 
     $('document').ready(setup);

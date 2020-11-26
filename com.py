@@ -36,7 +36,7 @@ class Com(Base):
 
     def __str__(self):
         display = '''\
-Name:     ''' + self.name.title()+'''\n\
+Name:     ''' + self.name+'''\n\
 YOB:      {self.yob}\n\
 Gender:   {self.gen}\n\
 Race:     {self.race}\n\

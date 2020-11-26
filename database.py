@@ -44,7 +44,7 @@ class Database:
         for h in hits:
             h.id = h.name.replace(' ','_')
             h.displayName = h.name.title()
-            h.overview = str(h).replace('\n','<br>')
+            h.overview = str(h).split('\n')
         return hits
     
     def makeWordCloud(self, name, threshold):
