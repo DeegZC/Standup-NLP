@@ -26,18 +26,15 @@ db = Database(app)
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-def checkWarned():
-    print(session)
-    if 'warned' not in session:
-        redirect('warning')
-        print('redirecting to warn')
-
+    
 #-----------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def home():
+    if 'warned' not in session:
+        return redirect('warning')
     if request.args.get('warned'):
         session['warned']=True
         print('found warned')
@@ -52,14 +49,14 @@ def warning():
 #-----------------------------------------------------------------------
 @app.route('/comicSearch', methods=['GET','POST'])
 def comicSearch():
-    checkWarned()
+    if 'warned' not in session:
+        return redirect('warning')
     return make_response(render_template('com_search.html'))
 
 #-----------------------------------------------------------------------
 
 @app.route('/comicSearchResults', methods=['POST','GET'])
 def comicSearchResults():
-    checkWarned()
     t0 = time.perf_counter()
     db.connect()
     print('getting coms')
@@ -71,4 +68,28 @@ def comicSearchResults():
     response = make_response(html)
     db.disconnect()
     return response
-#-----------------------------------------------------------------------
+
+@app.route('/about', methods=['GET'])
+def about():
+    return make_response(render_template('about.html'))
+
+@app.route('/wordClouds', methods=['GET'])
+def wordClouds():
+    if 'warned' not in session:
+        return redirect('warning')
+    db.connect()
+    html = render_template('word_clouds.html',
+        names=db.getNames(),
+        default_threshold=150)
+    db.disconnect()
+    return make_response(html)
+
+@app.route('/makeWordCloud', methods=['GET','POST'])
+def makeWordCloud():
+    if 'warned' not in session:
+        return redirect('warning')
+    db.connect()
+    html = render_template('show_word_cloud.html',
+        words = db.makeWordCloud(request.form.get('name'), request.form.get('threshold')))
+    db.disconnect()
+    return make_response(html)

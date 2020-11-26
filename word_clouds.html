@@ -1,419 +1,72 @@
 <!DOCTYPE html>
 <html>
 
-<style>
-      body,p,h3 {
-            font-family: 'Varela Round', sans-serif !important;
-            }
-    .center {
-        text-align: center;
-        display: block;
-        margin: auto;
-    }
-
-    img {
-        text-align: center;
-
-        margin-left: auto;
-        margin-right: auto;
-        border: 7px outset silver;
-        max-width: 200px;
-        max-height: 200px;
-    }
-
-    .form-center {
-        width: 40%;
-        margin: 0 auto;
-        /* border: 2px solid black; */
-        display: -webkit-flex;
-        /* Safari */
-        display: flex;
-        /* Standard syntax */
-        vertical-align: center;
-    }
-
-    form {
-        width: 100%;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    tr {
-        width: 100%;
-    }
-
-    td {
-        vertical-align: middle;
-    }
-
-    .block {
-        display: block;
-        width: 100%;
-        border: none;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 28px;
-        font-size: 16px;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .button {
-        border-radius: 8px;
-        background-color: red;
-        transition-duration: 0.2s;
-        font-size: 25px;
-        float: right;
-        margin-right: 50px;
-
-    }
-
-    .button:hover {
-        background-color: white;
-    }
-</style>
 
 <head>
-
 <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" >
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <title>Tigermatch</title>
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<!-- Path to Popper - it is for dropsdowns etc in bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<!-- Path to bootsrap -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="main.css">
-    <style>
-      body,p,h3 {
-            font-family: 'Varela Round', sans-serif !important;
-            }
-        .padThis {
-            padding-left: 100px;
-            padding-right: 100px;
-        }
-
-        body,p,h3 {
-            font-family: 'Valera Round', sans-serif !important;
-            }
-
-        /* .table {
-            border-collapse: separate !important;
-            border-spacing:0 20px !important;
-        } */
-
-        .img-thumbnail .thumbnail {
-            background: palevioletred !important;
-        }
-
-        tr.spaceUnder>td {
-            padding-bottom: 15px !important;
-            }
-
-        body {
-            background-color: pink !important;
-        }
-
-        h1 {
-            color: maroon !important;
-            text-align: center
-        }
-
-        /* table,
-        th,
-        td {
-            border: 1px solid lightblue;
-        } */
-
-        /* Tooltip container */
-        .tooltip {
-            position: relative !important;
-            display: inline-block !important;
-            border-bottom: 1px dotted black !important;
-            background-color: pink !important;
-            /* If you want dots under the hoverable text */
-        }
-
-        /* Tooltip text */
-        .tooltip .tooltiptext {
-            visibility: hidden !important;
-            width: 200px !important;
-            background-color: pink !important;
-            color: maroon !important;
-            text-align: center !important;
-            padding: 5px 0 !important;
-            border-radius: 6px !important;
-
-            /* Position the tooltip text - see examples below! */
-            position: absolute !important;
-            z-index: 1 !important;
-        }
-
-        /* Show the tooltip text when you mouse over the tooltip container */
-        .tooltip:hover .tooltiptext {
-            visibility: visible !important;
-        }
-    </style>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <title>Standup NLP</title>
 </head>
+<script src="bootstrap-autocomplete.min.js"></script>
 
 <body>
     {% include 'nav.html' %}
 </body>
-<div style="margin-top: 100px;">
-
-    <hr>
-    <div class="container bg-light text-center container bg-primary" style="background-color: lightpink;"><h1>My Profile</h1>
-    </div>
-    <hr>
-</div>
-<br>
-{% if validLLcoords == False%}
-<div class="alert alert-warning" role="alert"><strong>
-        The percentage breakdown of your Love Languages doesn't add up to 100%. Double check your scores!
-    </strong> </div>
-{%endif%}
-
 <div class="center">
-    <img src="{{me.pic}}" class="img-thumbnail">
+<h1>Make a Word Cloud</h1>
+
+<input type='number' id="threshold" method="post" step='1' min='0' max='250'
+                        value="{{default_threshold}}"></input>
+<br>
+<select class="form-control basicAutoSelect" name="simple_select"
+    placeholder="Type to search for a comic!" autocomplete="off" id='name'>
+    {%for n in names%}
+    <option value={{n}}>{{n.title()}}</option>
+    {%endfor%}
+</select>
+<button type="button" class="btn btn-primary" id='submit'>Generate Word Cloud</button>
+
 </div>
 
 <br>
-
-<div class="center">
-    <a data-toggle="tooltip" 
-       title="Save button is at the bottom! (green)"
-       data-placement="right"
-       target="_blank">Where do I save my profile?</a>
-</div>
-
-
-                                
-
-<div class="form-center">
-    <form action="profile" method="post" enctype=multipart/form-data>
-        <table>
-            <tr>
-                <td>
-                    <label for="Profile Picture">
-                        <h4><span class="glyphicon glyphicon-picture"></span> Profile Picture </h4>
-                    </label>
-                </td>
-                <td>
-                    <input type="file" id="pic" name="pic" accept="image/png, image/jpeg"></input>
-                </td>
-            </tr>
-        </table>
-        
-        <table class="table-sm">
-            <tr>
-                <td><label for="activestatus">
-                        <h4><span class="glyphicon glyphicon-sunglasses"></span> Profile Visibility&nbsp; </h4>
-                    </label></td>
-                <td><select name="active">
-                        <option value="True" {% if me.active %} selected="selected" {% endif %}>Active</option>
-                        <option value="False" {% if me.active == false %} selected="selected" {% endif %}>Hidden
-                        </option>
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="Netid">
-                        <h4><span class="glyphicon glyphicon-pushpin"></span> Netid&nbsp;</h4>
-                    </label></td>
-                <td>{{me.netid}}</td>
-            </tr>
-            <tr>
-                <td><label for="fname">
-                        <h4><span class="glyphicon glyphicon-flash"></span> First Name&nbsp;</h4>
-                    </label></td>
-                <td><input type="text" name="fname" value="{{me.fname}}"></td>
-            </tr>
-            <tr>
-                <td><label for="lname">
-                        <h4><span class="glyphicon glyphicon-flash"></span> Last Name&nbsp;</h4>
-                    </label></td>
-                <td><input type="text" name="lname" value="{{me.lname}}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="major">
-                        <h4><span class="glyphicon glyphicon-apple"></span> Major&nbsp; </h4>
-                    </label></td>
-                <td><select name="maj" method="post">
-                        <option value=-1 {% if me.maj == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1,majors|length) %}
-                        <option value={{i}} {% if me.maj == i %} selected="selected" {% endif %}>{{majors[i]}}</option>
-                        {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="year">
-                        <h4><span class="glyphicon glyphicon-calendar"></span> Year&nbsp; </h4>
-                    </label></td>
-                <td><select name="yr" method="post">
-                        <option value=-1 {% if me.yr == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1,years|length) %}
-                        <option value={{i}} {% if me.yr == i %} selected="selected" {% endif %}>{{years[i]}}</option>
-                        {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="hometown">
-                        <h4><span class="glyphicon glyphicon-home"></span> Hometown&nbsp;</h4>
-                    </label></td>
-                <td><select name="home" method="post">
-                        <option value=-1 {% if me.home == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1, hometowns|length) %}
-                        <option value={{i}} {% if me.home == i %} selected="selected" {% endif %}>{{hometowns[i]}}
-                        </option>
-                        {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="religion">
-                        <h4><span class="glyphicon glyphicon-globe"></span> Religion&nbsp;</h4>
-                    </label></td>
-                <td><select name="rel" method="post">
-                        <option value=-1 {% if me.rel == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1, religions|length)%}
-                        <option value={{i}} {% if me.rel == i %} selected="selected" {% endif %}>{{religions[i]}}
-                        </option>
-                        {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="industry">
-                        <h4><span class="glyphicon glyphicon-briefcase"></span> Industry&nbsp; </h4>
-                    </label></td>
-                <td><select name="ind" method="post">
-                        <option value=-1 {% if me.ind == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1,industries|length) %}
-                        <option value={{i}} {% if me.ind == i %} selected="selected" {% endif %}>{{industries[i]}}
-                        </option>
-                        {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="gender">
-                        <h4><span class="glyphicon glyphicon-knight"></span> My Gender&nbsp; </h4>
-                    </label></td>
-                <td><select name="genid" method="post">
-                        <option value=-1 {% if me.genid == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1,genders|length) %}
-                        <option value={{i}} {% if me.genid == i %} selected="selected" {% endif %}>{{genders[i]}}
-                        </option>
-                        {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label for="gender">
-                        <h4><span class="glyphicon glyphicon-eye-open"></span> Seeking&nbsp; </h4>
-                    </label></td>
-                <!-- <td><label for="Gender Interests">Hint: hold ctrl/cmd and click to select multiple &nbsp;</label></td> -->
-                <!-- <div class="tooltip"><b>How do I select multiple gender interests?</b>
-                    <span class="tooltiptext">hold ctrl/cmd and click to select multiple &nbsp;</label></td></span>
-                </div> -->
-                <td><select name="genint" method="post" multiple>
-                        {% for i in range(1,genders|length)%}
-                        <option value={{i}} {% if i in me.genint %} selected="selected" {% endif %}>{{genders[i]}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    <span data-toggle="tooltip" data-placement="right" title="hold ctrl/cmd and click to select multiple &nbsp;">
-                        <a target="_blank">How do I select multiple gender interests?</a>
-                    </span>
-                </td>
-
-            </tr>
-            <tr>
-                <td><label for="lovelang">
-                        <h4><span class="glyphicon glyphicon-star"></span> My #1 Love Language&nbsp; </h4>
-                    </label></td>
-                <td><select name="ll" method="post">
-                        <option value=-1 {% if me.ll == -1 %} selected="selected" {% endif %}>Choose one</option>
-                        {% for i in range(1, lovelangs|length) %}
-                        <option value={{i}} {% if me.ll == i %} selected="selected" {% endif %}>{{lovelangs[i]}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    <!-- <div class="tooltip"><b><a href="https://www.5lovelanguages.com/quizzes/singles-quiz/"
-                                target="_blank">What's my love language?</a></b>
-                        <span class="tooltiptext">Click here to take an external quiz and find out <i>yours!</i>
-                            &nbsp;</span>
-                    </div> -->
-                    <span data-toggle="tooltip" data-placement="right" title="Click here, take the quiz to find out!">
-                        <a href="https://www.5lovelanguages.com/quizzes/singles-quiz/"
-                                target="_blank">What's my love language?</a>
-                    </span>
-                </td>
-            </tr>
-
-            {%for i in range(1,lovelangs|length)%}
-            <tr class="spaceUnder">
-                <td>{{lovelangs[i]}} %</td>
-                <td><input type='number' name="ll_coords[]" method="post" step='1' min='0' max='100'
-                        value="{{me.ll_coords[i-1]}}"></input></td>
-            </tr>
-
-            {% endfor%}
-            <tr>&nbsp;</tr>
-
-            <tr>
-                <td><label for="Bio">
-                        <h4><span class="glyphicon glyphicon-align-left"></span> Bio&nbsp; </h4>
-                    </label></td>
-                <td><textarea id="bio" name="bio" rows="10" cols="50"
-                        placeholder="500 char limit&#10;-What you're looking for (serious dating, cuddle buddy, GF/BF)&#10;-Hobbies&#10;-Ideal soulmate characteristics&#10;;) anything you want">{{me.bio}}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="Contact Info">
-                        <h4><span class="glyphicon glyphicon-earphone"></span> Contact Info&nbsp; </h4>
-                    </label></td>
-                <td><textarea id="contact" name="contact" rows="4" cols="50"
-                        placeholder="500 char limit&#10;phone #&#10;any social media you'd use to communicate with your match(es)!">{{me.contact}}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input class="block" type="submit" value="Save Changes"
-                        style="background: rgb(56, 184, 56)"></input></td>
-            </tr>
-        </table>
-    </form>
-</div>
-<br>
-
-<hr>
-
-<span>
-    <div class="padThis">
-    <p>Warning: Deleting your account cannot be undone. To simply hide your profile from others, toggle <i>Profile Visibility</i> above.</p>
-    <form method="post" action="deleteProfile">
-        <button class="button" type="submit" style="align-self: right" name="DELETE_PROFILE" value="{{me.netid}}">Delete
-            Profile</button>
-    </form>
-    </div>
-</span>
-
+      <span id="word_cloud"></span>
 
 <script>
-    // prevent spazzing; knwon bs4 bug
-    $('[data-toggle="tooltip"]').tooltip({ container: 'body' });
+    'use strict';
 
-    // activates all of them for performance
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+    function handleResponse(response) {
+    $('#word_cloud').html(response);
+    }
+
+    let requestRecs = null;
+
+    function getResults() {
+    let url = '/makeWordCloud';
+
+    let data = {};
+    data['name'] = $('#name').val()
+    data['threshold'] = $('#threshold').val()
+
+    if (requestRecs != null)
+        requestRecs.abort();
+
+    requestRecs = $.ajax(
+        {
+        type: 'POST',
+        url: url,
+        data: data,
+        success: handleResponse
+        }
+    );
+    }
+
+    function setup() {
+    $('#submit').focus();
+    $('#submit').on('input', getResults);
+    }
+
+    $('document').ready(setup);
 </script>
-
-
-<br><br><br><br>
-{% include 'footer.html' %}
 
 </html>

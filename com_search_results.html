@@ -3,12 +3,12 @@
 <table class='table'>
 {% for s in comics%}
     <tr><td>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.name}}" aria-expanded="false" aria-controls="{{s.name}}">
-        {{s.name.title().replace('_',' ')}}
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.id}}" aria-expanded="false" aria-controls="{{s.id}}">
+        {{s.displayName}}
     </button>
-    <div class="collapse" id="{{s.name}}">
+    <div class="collapse" id="{{s.id}}">
         <br>
-        <div class="card card-body">{{str(s).replace('\n','<br>')}}</div>
+        <div class="card card-body">{{s.overview}}</div>
     </div>
     </td></tr>
 {% endfor %}

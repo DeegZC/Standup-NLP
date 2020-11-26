@@ -33,7 +33,7 @@ class Database:
             return u
 
     def getNames(self):
-        return [c.name.title() for c in self.session.query(Com).all()]
+        return [c.name for c in self.session.query(Com).all()]
 
     def getComByName(self, fname, lname):
         hits = self.session.query(Com).all()
@@ -42,5 +42,11 @@ class Database:
         if lname:
             hits = [h for h in hits if lname.lower() in h.name.split(' ')[-1]]
         for h in hits:
-            h.name = h.name.replace(' ','_')
+            h.id = h.name.replace(' ','_')
+            h.displayName = h.name.title()
+            h.overview = str(h).replace('\n','<br>')
         return hits
+    
+    def makeWordCloud(self, name, threshold):
+        com = self.getCom(name)
+        return com.top_words[:10]

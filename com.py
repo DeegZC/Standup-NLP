@@ -32,6 +32,7 @@ class Com(Base):
     uwpm = Column(REAL)
     rating = Column(REAL)
     top_words = Column(ARRAY(Text))
+    top_counts = Column(ARRAY(Integer))
 
     def __str__(self):
         display = '''\
