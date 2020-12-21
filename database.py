@@ -44,7 +44,7 @@ class Database:
         for h in hits:
             h.id = h.name.replace(' ','_')
             h.stats = [h.name.title(), 2020-int(h.yob), h.gen, h.race, h.words,
-                h.uwords, h.runtime, round(h.wpm), round(h.rating)]
+                h.uwords, h.runtime, round(h.wpm), round(h.rating,2)]
             #ADD SORTS
         return hits
     
