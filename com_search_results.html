@@ -23,13 +23,15 @@
             {%endfor%}
         <td>
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.id}}" aria-expanded="false" aria-controls="{{s.id}}">
-            Specials
+            Specials ({{s.specials|length}})
             </button>
             <div class="collapse" id="{{s.id}}">
                 <div class="card card-body">
+                <ul>
                 {%for o in s.specials%}
-                    {{o.title()}}<br>
+                    <li>{{o.title()}}</li>
                 {%endfor%}
+                </ul>
                 </div>
             </div>
         </td>
