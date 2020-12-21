@@ -28,11 +28,9 @@
             <div class="collapse" id="{{s.id}}">
                 <br>
                 <div class="card card-body">
-                <table class='table'>
-                    {%for o in s.specials%}
-                    <tr><td>{{o.title()}}</td></tr>
-                    {%endfor%}
-                </table>
+                {%for o in s.specials%}
+                    {{o.title()}}<br>
+                {%endfor%}
                 </div>
             </div>
         </td>
