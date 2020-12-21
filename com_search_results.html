@@ -1,22 +1,29 @@
 {% if comics|length%}
 <p style="text-align:center">{{results}} Results in {{time}} seconds</p>
-<table class='table'>
+<table class='table table-dark'>
 {% for s in comics%}
-    <tr><td>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.id}}" aria-expanded="false" aria-controls="{{s.id}}">
-        {{s.displayName}}
-    </button>
-    <div class="collapse" id="{{s.id}}">
-        <br>
-        <div class="card card-body">
-        <table class='table'>
-            {%for o in s.overview%}
-            <tr><td>{{o}}</td></tr>
+    <tr>
+            {% for stat in s.stats %}
+        <td>
+            {{stat}}
+        </td>
             {%endfor%}
-        </table>
-        </div>
-    </div>
-    </td></tr>
+        <td>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{s.id}}" aria-expanded="false" aria-controls="{{s.id}}">
+            Specials
+            </button>
+            <div class="collapse" id="{{s.id}}">
+                <br>
+                <div class="card card-body">
+                <table class='table'>
+                    {%for o in s.specials%}
+                    <td>{{o}}</td>
+                    {%endfor%}
+                </table>
+                </div>
+            </div>
+        </td>
+    </tr>
 {% endfor %}
 </table>
 {%else%}

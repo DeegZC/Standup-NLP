@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 
-<style>
-      body,p,h3 {font-family: 'Varela Round', sans-serif !important;}
-</style>
-
 <html>
 
 <head>
@@ -20,21 +16,21 @@
 
   <div class="column">
     <div class="container">
-        <table class='table'>
-          <tr>
-            <td>First Name</td>
-            <td><input type="text" id="fname"/></td>
-          </tr>
-          <tr>
-            <td>Last Name</td>
-            <td><input type="text" id="lname"/></td>
-          </tr>
-          <!--tr>
-          <td></td>
-          <td><input type="submit" class="block" value="Search for a Friend"
-              style="background: rgb(56, 184, 56)"></input></td>
-        </tr-->
-        </table>
+        <div class="container bg-primary">
+         <center>
+        <h1>Comic Search</h1>
+        </center>
+        
+        <div class="row">
+            <div class="col-sm-3">
+                <input type="text" id="fname" class="form-control" placeholder="First Name">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" id="lname" class="form-control" placeholder="Last Name">
+            </div>
+        </div>
+        <br>
+    </div>
       <span id="recSpan"></span>
     </div>
     

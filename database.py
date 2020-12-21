@@ -43,8 +43,8 @@ class Database:
             hits = [h for h in hits if lname.lower() in h.name.split(' ')[-1]]
         for h in hits:
             h.id = h.name.replace(' ','_')
-            h.displayName = h.name.title()
-            h.overview = str(h).split('\n')
+            h.stats = [h.name.title(), 2020-h.yob, h.gen, h.race, h.words, h.uwords, h.runtime, h.wpm, h.uwpm, h.rating]
+            #ADD SORTS
         return hits
     
     def makeWordCloud(self, name, threshold):
