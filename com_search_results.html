@@ -1,6 +1,19 @@
+<br>
 {% if comics|length%}
 <p style="text-align:center">{{results}} Results in {{time}} seconds</p>
 <table class='table table-dark'>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Race</th>
+        <th>Total Words</th>
+        <th>Unique Words</th>
+        <th>Total Runtime (min)</th>
+        <th>Talking Speed (wpm)</th>
+        <th>Average IMDB Rating (out of 10)</th>
+        <th>Specials</th>
+    </tr>
 {% for s in comics%}
     <tr>
             {% for stat in s.stats %}
@@ -17,7 +30,7 @@
                 <div class="card card-body">
                 <table class='table'>
                     {%for o in s.specials%}
-                    <td>{{o}}</td>
+                    <tr><td>{{o.title()}}</td></tr>
                     {%endfor%}
                 </table>
                 </div>
@@ -27,7 +40,7 @@
 {% endfor %}
 </table>
 {%else%}
-<h2>No Matching Comics</h2>
+<h2 text-align='center'>No Matching Comics</h2>
 <br>
-<h3>Check for typos!</h3>
+<h3 text-align='center'>Check for typos!</h3>
 {%endif%}
