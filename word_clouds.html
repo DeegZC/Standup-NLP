@@ -14,25 +14,35 @@
     {% include 'nav.html' %}
 </body>
 
-<center>
-<div class="container">
-<h1>Make a Word Cloud</h1>
-
-<input type='number' id="threshold" method="post" step='1' min='0' max='250'
+<div class="column">
+    <div class="container">
+        <div class="container bg-primary">
+         <center>
+        <h1>Word Cloud Creator</h1>
+        </center>
+        
+        <div class="row">
+            <div class="col-sm-3">
+                <input type='number' id="threshold" method="post" step='1' min='0' max='250'
                         value="{{default_threshold}}"></input>
-<br>
-<select class="form-control basicAutoSelect" name="simple_select"
-    placeholder="Type to search for a comic!" autocomplete="off" id='name'>
-    {%for n in names%}
-    <option value={{n}}>{{n.title()}}</option>
-    {%endfor%}
-</select>
-<button type="button" class="btn btn-primary" id='submit'>Generate Word Cloud</button>
+            </div>
+            <div class="col-sm-3">
+                <select class="form-control basicAutoSelect" name="simple_select"
+                    placeholder="Type to search for a comic!" autocomplete="off" id='name'>
+                    {%for n in names%}
+                    <option value={{n}}>{{n.title()}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="col-sm-3">
+              <button type="button" class="btn btn-primary" id='submit'>Generate Word Cloud</button>
+            </div>
+        </div>
+        <br>
+    </div>
+    <span id="word_cloud"></span>
 </div>
-</center>
-
-<br>
-      <span id="word_cloud"></span>
+      
 
 <script>
     'use strict';

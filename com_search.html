@@ -19,7 +19,7 @@
     <div class="container">
         <div class="container bg-primary">
          <center>
-        <h1>Comic Search</h1>
+        <h1>Comedian Search</h1>
         </center>
         
         <div class="row">
@@ -32,7 +32,7 @@
             <div class="col-sm-3">
               <h4>Sort
                 <select id="sort" method="post">
-                        <option value='alpha' selected="selected">Alphabetical</option>
+                        <option value='alpha'>Alphabetical</option>
                         <option value='age'>Age</option>
                         <option value='words'>Total Words</option>
                         <option value='uwords'>Unique Words</option>
@@ -50,7 +50,7 @@
         <br>
     </div>
       <span id="recSpan"></span>
-    </div>
+  </div>
     
 
     <script>
@@ -90,7 +90,7 @@
         $('#fname').on('input', getResults);
         $('#lname').on('input', getResults);
         $('#sort').on('input', getResults);
-        $('input:checkbox').change(getResults);
+        $('#order').change(getResults);
         getResults();
       }
 
