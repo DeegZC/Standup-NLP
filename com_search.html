@@ -5,7 +5,7 @@
 <head>
 <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" >
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
   <title>Standup NLP</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
     </script>
@@ -70,7 +70,7 @@
         data['fname'] = $('#fname').val()
         data['lname'] = $('#lname').val()
         data['sort'] = $('#sort').val()
-        data['order'] = $('#order').val()
+        data['order'] = $('#order').is(":checked")
         console.log(data)
         if (requestRecs != null)
           requestRecs.abort();
@@ -90,7 +90,7 @@
         $('#fname').on('input', getResults);
         $('#lname').on('input', getResults);
         $('#sort').on('input', getResults);
-        $('#order').on('input', getResults);
+        $('#order').on('change', getResults);
         getResults();
       }
 
