@@ -90,7 +90,7 @@
         $('#fname').on('input', getResults);
         $('#lname').on('input', getResults);
         $('#sort').on('input', getResults);
-        $('#order').on('change', getResults);
+        $('input:checkbox').change(getResults);
         getResults();
       }
 
