@@ -29,7 +29,7 @@
                 <div class="card card-body">
                 <ul>
                 {%for o in s.specials%}
-                    <li>{{o.title()}}</li>
+                    <li>{{string.capwords(o)}}</li>
                 {%endfor%}
                 </ul>
                 </div>

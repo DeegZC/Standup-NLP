@@ -33,7 +33,9 @@ class Database:
             return u
 
     def getNames(self):
-        return [c.name for c in self.session.query(Com).all()]
+        names = [c.name for c in self.session.query(Com).all()]
+        names.sort()
+        return names
 
     def searchComs(self, fname, lname, key, order):
         hits = self.session.query(Com).all()

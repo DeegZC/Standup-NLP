@@ -16,26 +16,26 @@
 
 <div class="column">
     <div class="container">
-        <div class="container bg-primary">
+        <div class="container bg-primary" style='border-radius:10px'>
          <center>
         <h1>Word Cloud Creator</h1>
+        <br>
         </center>
         
         <div class="row">
-            <div class="col-sm-3">
-                <input type='number' id="threshold" method="post" step='1' min='0' max='250'
-                        value="{{default_threshold}}"></input>
+            <div class="col-sm-4">
+                <input type='number' id="threshold" step='1' min='0' max='250'
+                        value="{{default_threshold}}" style='color:black'></input>
             </div>
-            <div class="col-sm-3">
-                <select class="form-control basicAutoSelect" name="simple_select"
-                    placeholder="Type to search for a comic!" autocomplete="off" id='name'>
+            <div class="col-sm-4">
+                <select id='name'>
                     {%for n in names%}
                     <option value={{n}}>{{n.title()}}</option>
                     {%endfor%}
                 </select>
             </div>
-            <div class="col-sm-3">
-              <button type="button" class="btn btn-primary" id='submit'>Generate Word Cloud</button>
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-success" id='submit'>Generate Word Cloud</button>
             </div>
         </div>
         <br>
@@ -54,24 +54,24 @@
     let requestRecs = null;
 
     function getResults() {
-    console.log('getting results')
-    let url = '/makeWordCloud';
+        console.log('getting results')
+        let url = '/makeWordCloud';
 
-    let data = {};
-    data['name'] = $('#name').val()
-    data['threshold'] = $('#threshold').val()
+        let data = {};
+        data['name'] = $('#name').val()
+        data['threshold'] = $('#threshold').val()
 
-    if (requestRecs != null)
-        requestRecs.abort();
+        if (requestRecs != null)
+            requestRecs.abort();
 
-    requestRecs = $.ajax(
-        {
-        type: 'POST',
-        url: url,
-        data: data,
-        success: handleResponse
-        }
-    );
+        requestRecs = $.ajax(
+            {
+            type: 'POST',
+            url: url,
+            data: data,
+            success: handleResponse
+            }
+        );
     }
 
     function setup() {

@@ -6,6 +6,7 @@
 
 from database import Database
 from flask import Flask, request, make_response, redirect, url_for, render_template, session
+import string
 from config import Config
 import numpy as np
 import time
