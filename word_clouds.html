@@ -23,6 +23,14 @@
         
         <div class="row">
             <div class="col-sm-4">
+                <h3 data-toggle="tooltip" data-placement="bottom" title="Filters out the top n words used by all comedians.">Threshold</h3>
+            </div>
+            <div class="col-sm-4">
+                <h3>Comedian</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
                 <input type='number' id="threshold" step='1' min='0' max='250'
                         value="{{default_threshold}}" style='color:black; border-radius:4px;'></input>
             </div>
@@ -80,6 +88,10 @@
     }
 
     $('document').ready(setup);
+
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 
 </html>
