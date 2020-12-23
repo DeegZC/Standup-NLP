@@ -20,7 +20,6 @@
          <center>
         <h1>Word Cloud Creator</h1>
         <br>
-        </center>
         
         <div class="row">
             <div class="col-sm-4">
@@ -28,7 +27,7 @@
                         value="{{default_threshold}}" style='color:black'></input>
             </div>
             <div class="col-sm-4">
-                <select id='name'>
+                <select id='name' style='color:black'>
                     {%for n in names%}
                     <option value={{n}}>{{n.title()}}</option>
                     {%endfor%}
@@ -39,6 +38,7 @@
             </div>
         </div>
         <br>
+        </center>
     </div>
     <span id="word_cloud"></span>
 </div>
