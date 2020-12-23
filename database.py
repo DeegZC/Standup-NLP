@@ -99,4 +99,8 @@ class Database:
             freq_list.append([com.top_words[i],com.top_counts[i]])
         filtered = [pair for pair in freq_list if pair[0] not in STOP_WORDS[:threshold]]
         filtered.sort(key = lambda x: x[1], reverse=True)
-        return filtered[:50]
+        top = filtered[:50]
+        freq_dict = {}
+        for t in top:
+            freq_dict[t[0]] = t[1]
+        return freq_dict

@@ -8,7 +8,12 @@ from database import Database
 from flask import Flask, request, make_response, redirect, url_for, render_template, session
 from config import Config
 import numpy as np
+import io
+import base64
 import time
+from wordcloud import WordCloud
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 #-----------------------------------------------------------------------
 # cloudinary.config()
 
@@ -94,8 +99,22 @@ def makeWordCloud():
     except Exception:
         validArgs = False
 
+    wc = WordCloud(background_color="white", colormap="Dark2",
+               max_font_size=150, random_state=42)
+    wc.generate_from_frequencies(words)
+    fig = Figure()
+    axis = fig.add_subplot(1,1,1)
+    axis.imshow(wc, interpolation="bilinear")
+    axis.axis('off')
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+
     html = render_template('show_word_cloud.html',
         validArgs = validArgs,
-        words = words)
+        image=pngImageB64String)
     db.disconnect()
     return make_response(html)
