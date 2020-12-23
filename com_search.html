@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
 <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" >
@@ -30,7 +28,7 @@
           </div>
           <div class="row">
             <div class="col-sm-6">
-              <h4 display='inline'>Sort</h4>
+              <h4 style='display:inline'>Sort</h4>
                 <select id="sort" style='color:black'>
                         <option value='alpha'>Alphabetical</option>
                         <option value='age'>Age</option>
@@ -44,7 +42,7 @@
               
             </div>
             <div class='col-sm-6'>
-              <h4 display='inline'>Order</h4>
+              <h4 style='display:inline'>Order</h4>
                 <select id="order" style='color:black'>
                         <option value='asc'>Ascending</option>
                         <option value='desc'>Descending</option>
@@ -74,7 +72,7 @@
         data['fname'] = $('#fname').val()
         data['lname'] = $('#lname').val()
         data['sort'] = $('#sort').val()
-        data['order'] = $('#order').is(":checked")
+        data['order'] = $('#order').val()
         console.log(data)
         if (requestRecs != null)
           requestRecs.abort();
