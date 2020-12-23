@@ -8,10 +8,8 @@
 from com import Com
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-
+import string
 #-----------------------------------------------------------------------
-
-DEFAULT_PROFILE_PIC = 'https://res.cloudinary.com/hvc9pv02i/image/upload/v1603764923/gjlxtya69lekqr4nw97w.jpg'
 class Database:
 
     def __init__(self, app):
@@ -66,8 +64,10 @@ class Database:
             h.id = h.name.replace(' ','_')
             h.stats = [h.name.title(), 2020-int(h.yob), h.gen, h.race, h.words,
                 h.uwords, h.runtime, round(h.wpm), round(h.rating,2)]
+            h.display_specials = [string.capwords(s) for s in h.specials]
         return hits
     
     def makeWordCloud(self, name, threshold):
         com = self.getCom(name)
+        print(com)
         return com.top_words[:10]

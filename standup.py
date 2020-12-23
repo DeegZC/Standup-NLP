@@ -6,7 +6,6 @@
 
 from database import Database
 from flask import Flask, request, make_response, redirect, url_for, render_template, session
-import string
 from config import Config
 import numpy as np
 import time
@@ -81,14 +80,12 @@ def wordClouds():
     db.connect()
     html = render_template('word_clouds.html',
         names=db.getNames(),
-        default_threshold=150)
+        default_threshold=200)
     db.disconnect()
     return make_response(html)
 
 @app.route('/makeWordCloud', methods=['GET','POST'])
 def makeWordCloud():
-    if 'warned' not in session:
-        return redirect('warning')
     db.connect()
     html = render_template('show_word_cloud.html',
         words = db.makeWordCloud(request.form.get('name'), request.form.get('threshold')))

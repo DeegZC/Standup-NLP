@@ -28,8 +28,8 @@
             <div class="collapse" id="{{s.id}}">
                 <div class="card card-body">
                 <ul>
-                {%for o in s.specials%}
-                    <li>{{string.capwords(o)}}</li>
+                {%for o in s.display_specials%}
+                    <li>{{o}}</li>
                 {%endfor%}
                 </ul>
                 </div>
