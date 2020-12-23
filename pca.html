@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <title>Standup NLP</title>
+</head>
+
+<body>
+    {% include 'nav.html' %}
+</body>
+
+<div class="column">
+    <div class="container">
+        <div class="container bg-primary" style='border-radius:10px'>
+         <center>
+        <h1>Comedian Similarity Plot</h1>
+        <br>
+        </center>
+    </div>
+    {%include 'com_plot.html'%}
+</div>
+</html>

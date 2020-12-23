@@ -4,6 +4,7 @@
 # app.py
 #-----------------------------------------------------------------------
 
+from numpy.core.getlimits import MachArLike
 from database import Database
 from flask import Flask, request, make_response, redirect, url_for, render_template, session
 from config import Config
@@ -89,6 +90,10 @@ def wordClouds():
     db.disconnect()
     return make_response(html)
 
+@app.route('/pca', methods=['GET','POST'])
+def makeWordCloud():
+    return make_response(render_template('pca.html'))
+
 @app.route('/makeWordCloud', methods=['GET','POST'])
 def makeWordCloud():
     db.connect()
@@ -106,15 +111,17 @@ def makeWordCloud():
     axis = fig.add_subplot(1,1,1)
     axis.imshow(wc, interpolation="bilinear")
     axis.axis('off')
-    pngImage = io.BytesIO()
-    FigureCanvas(fig).print_png(pngImage)
-    
-    # Encode PNG image to base64 string
-    pngImageB64String = "data:image/png;base64,"
-    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
 
     html = render_template('show_word_cloud.html',
         validArgs = validArgs,
-        image=pngImageB64String)
+        image= encodeFig(fig))
     db.disconnect()
     return make_response(html)
+
+def encodeFig(fig):
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
