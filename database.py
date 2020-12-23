@@ -10,6 +10,31 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 import string
 #-----------------------------------------------------------------------
+STOP_WORDS = ['the', 'you', 'and', 'to', 'like', 'that', 'it', 'of', 'in', 'was', 
+'is', 'my', 'im', 'know', 'this', 'on', 'its', 'just', 'what', 'me', 'dont', 'they', 
+'he', 'have', 'do', 'so', 'for', 'we', 'be', 'all', 'but', 'with', 'your', 'not', 
+'thats', 'get', 'up', 'are', 'at', 'out', 'no', 'right', 'go', 'if', 'youre', 'about', 
+'got', 'one', 'people', 'there', 'when', 'she', 'were', 'now', 'then', 'can', 'fucking', 
+'gonna', 'shit', 'oh', 'how', 'think', 'said', 'yeah', 'had', 'fuck', 'want', 'man', 
+'here', 'say', 'as', 'an', 'her', 'going', 'some', 'time', 'because', 'them', 'would', 
+'see', 'hes', 'his', 'him', 'cause', 'good', 'theyre', 'did', 'from', 'why', 'well', 
+'look', 'or', 'theres', 'back', 'really', 'little', 'come', 'cant', 'thing', 'who', 
+'down', 'never', 'guy', 'off', 'love', 'didnt', 'okay', 'been', 'ive', 'even', 'where', 
+'make', 'over', 'very', 'way', 'tell', 'ill', 'guys', 'ever', 'by', 'their', 'day', 
+'into', 'take', 'could', 'put', 'two', 'something', 'went', 'hey', 'goes', 'mean', 
+'these', 'other', 'more', 'will', 'shes', 'first', 'doing', 'every', 'god', 'life', 
+'too', 'has', 'us', 'lot', 'always', 'give', 'much', 'uh', 'around', 'thank', 'show', 
+'old', 'years', 'our', 'need', 'only', 'whats', 'big', 'kids', 'those', 'things', 
+'should', 'thought', 'any', 'white', 'women', 'feel', 'let', 'am', 'black', 'gotta', 
+'which', 'doesnt', 'kind', 'great', 'than', 'being', 'lets', 'yes', 'woman', 'id', 
+'before', 'house', 'still', 'home', 'wanna', 'work', 'new', 'talk', 'getting', 
+'trying', 'ass', 'baby', 'bit', 'night', 'talking', 'does', 'dick', 'bad', 'dad', 
+'year', 'through', 'same', 'anything', 'three', 'youve', 'girl', 'real', 'after', 
+'world', 'looking', 'better', 'aint', 'maybe', 'saying', 'room', 'away', 'came', 
+'car', 'remember', 'next', 'nothing', 'made', 'call', 'whole', 'last', 'hear', 
+'face', 'done', 'walk', 'kid', 'men', 'everybody', 'says', 'joke', 'coming', 'start', 
+'used', 'name', 'most', 'friends', 'sex', 'long', 'person', 'stuff', 'another', 'sorry', 'stop']
+
 class Database:
 
     def __init__(self, app):
@@ -69,5 +94,9 @@ class Database:
     
     def makeWordCloud(self, name, threshold):
         com = self.getCom(name)
-        print(com)
-        return com.top_words[:10]
+        freq_list = []
+        for i in range(len(com.top_words)):
+            freq_list.append([com.top_words[i],com.top_counts[i]])
+        filtered = [pair for pair in freq_list if pair[0] not in STOP_WORDS[:threshold]]
+        filtered.sort(key = lambda x: x[1], reverse=True)
+        return filtered[:50]

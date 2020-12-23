@@ -87,7 +87,15 @@ def wordClouds():
 @app.route('/makeWordCloud', methods=['GET','POST'])
 def makeWordCloud():
     db.connect()
+    validArgs = True
+    words = []
+    try:
+        words = db.makeWordCloud(request.form.get('name'), int(request.form.get('threshold')))
+    except Exception:
+        validArgs = False
+
     html = render_template('show_word_cloud.html',
-        words = db.makeWordCloud(request.form.get('name'), request.form.get('threshold')))
+        validArgs = validArgs,
+        words = words)
     db.disconnect()
     return make_response(html)
