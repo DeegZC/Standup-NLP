@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
-
-
 <head>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" >
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <title>Standup NLP</title>
 </head>
-<script src="bootstrap-autocomplete.min.js"></script>
 
 <body>
     {% include 'nav.html' %}
@@ -23,7 +18,8 @@
         
         <div class="row">
             <div class="col-sm-4">
-                <h3 data-toggle="tooltip" data-placement="bottom" title="Filters out the top n words used by all comedians.">Threshold</h3>
+                <h3>Threshold <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" 
+                data-placement="bottom" title="Filters out the top n words used by all comedians."></span></h3>
             </div>
             <div class="col-sm-4">
                 <h3>Comedian</h3>
