@@ -60,7 +60,7 @@ def comicSearchResults():
     t0 = time.perf_counter()
     db.connect()
     print('getting coms')
-    comics = db.getComByName(request.form.get('fname'),request.form.get('lname'))
+    comics = db.searchComs(request.form.get('fname'),request.form.get('lname'), request.form.get('key'),request.form.get('order'))
     html = render_template('com_search_results.html',
         comics = comics,
         results = len(comics),

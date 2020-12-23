@@ -32,7 +32,7 @@
         <div class="col-sm-3">
         </div>
         <div class="col-sm-3">
-            <select id="sort" style='color:black; border-radius:4px;'>
+            <select id="key" style='color:black; border-radius:4px;'>
                     <option value='alpha'>Alphabetical</option>
                     <option value='age'>Age</option>
                     <option value='words'>Total Words</option>
@@ -76,7 +76,7 @@
         let data = {};
         data['fname'] = $('#fname').val()
         data['lname'] = $('#lname').val()
-        data['sort'] = $('#sort').val()
+        data['key'] = $('#key').val()
         data['order'] = $('#order').val()
         console.log(data)
         if (requestRecs != null)
@@ -96,7 +96,7 @@
         $('#fname').focus();
         $('#fname').on('input', getResults);
         $('#lname').on('input', getResults);
-        $('#sort').on('input', getResults);
+        $('#key').on('input', getResults);
         $('#order').on('input', getResults);
         getResults();
       }

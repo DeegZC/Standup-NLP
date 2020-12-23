@@ -35,17 +35,35 @@ class Database:
     def getNames(self):
         return [c.name for c in self.session.query(Com).all()]
 
-    def getComByName(self, fname, lname):
+    def searchComs(self, fname, lname, key, order):
         hits = self.session.query(Com).all()
         if fname:
             hits = [h for h in hits if fname.lower() in h.name.split(' ')[0]]
         if lname:
             hits = [h for h in hits if lname.lower() in h.name.split(' ')[-1]]
+
+        sorts = {'alpha':lambda x: x.name,
+            'age':lambda x: 2020-int(x.yob),
+            'words':lambda x: x.words,
+            'uwords':lambda x: x.uwords,
+            'runtime':lambda x: x.runtime,
+            'wpm':lambda x: x.wpm,
+            'rating': lambda x: x.rating,
+            'numspec':lambda x: len(x.specials)}
+        
+        rev = False
+        if order == 'desc':
+            rev = True
+        try:
+            hits.sort(key = sorts[key], reverse=rev)
+        except IndexError:
+            print('Invalid type of sort!')
+        
+        #more fields
         for h in hits:
             h.id = h.name.replace(' ','_')
             h.stats = [h.name.title(), 2020-int(h.yob), h.gen, h.race, h.words,
                 h.uwords, h.runtime, round(h.wpm), round(h.rating,2)]
-            #ADD SORTS
         return hits
     
     def makeWordCloud(self, name, threshold):
