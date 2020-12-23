@@ -91,7 +91,7 @@ def wordClouds():
     return make_response(html)
 
 @app.route('/pca', methods=['GET','POST'])
-def makeWordCloud():
+def pca():
     return make_response(render_template('pca.html'))
 
 @app.route('/makeWordCloud', methods=['GET','POST'])
