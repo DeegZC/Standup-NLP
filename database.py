@@ -112,9 +112,10 @@ class Database:
         results = {}
         rejects = []
         for w in words:
-            trend = self.session.query(Trend).filter(Trend.word == w).all()
-            if trend:
-                results[w] = trend[0].toDict()
-            else:
-                rejects.append(w)
+            if w:
+                trend = self.session.query(Trend).filter(Trend.word == w).all()
+                if trend:
+                    results[w] = trend[0].toDict()
+                else:
+                    rejects.append(w)
         return results, rejects
