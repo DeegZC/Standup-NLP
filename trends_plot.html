@@ -2,7 +2,7 @@
 {% if rejects|length%}
 <div class="container alert alert-warning" role="alert">
     <strong>
-        The following words either don't occur in the data or occur fewer than 20 times.
+        The following words either don't occur in the data or occur fewer than 20 times.<br>
     </strong> 
         ({{rejects[0]}})
         {%for r in rejects[1:]%}
@@ -12,7 +12,6 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-{%else%}
-<img src="{{image}}" style ='border: 5px solid black'/>
 {%endif%}
+<img src="{{image}}" style ='border: 5px solid black; object-fit:contain;'/>
 <center>
