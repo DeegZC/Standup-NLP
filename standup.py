@@ -107,7 +107,7 @@ def plotTrends():
     fig = Figure()
     axis = fig.add_subplot(1,1,1)
     for w in words:
-        x = [w.keys()]
+        x = list(w.keys())
         y = [w[year] for year in x]
         axis.plot(x,y)
     return make_response(render_template('trends_plot.html',
