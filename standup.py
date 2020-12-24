@@ -25,6 +25,7 @@ from flask import send_from_directory
 app = Flask(__name__, template_folder='.')
 app.config.from_object(Config)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+plt.style.use('fivethirtyeight')
 
 db = Database(app)
 
@@ -101,35 +102,43 @@ def trends():
 @app.route('/plotTrends', methods=['GET','POST'])
 def plotTrends():
     db.connect()
-    img = db.getTrends(request.form.get('words'))
+    words, rejects = db.getTrends(request.form.get('words'))
     db.disconnect()
+    fig = Figure()
+    axis = fig.add_subplot(1,1,1)
+    for w in words:
+        x = [w.keys()]
+        y = [w[year] for year in x]
+        axis.plot(x,y)
     return make_response(render_template('trends_plot.html',
-        image = img))
+        image = encodeFig(fig),
+        rejects = rejects))
 
 @app.route('/makeWordCloud', methods=['GET','POST'])
 def makeWordCloud():
     db.connect()
     validArgs = True
     words = []
+    image = 0
     try:
         thresh = int(request.form.get('threshold'))
         if thresh > 250:
             raise Exception
         words = db.makeWordCloud(request.form.get('name'), thresh)
+        wc = WordCloud(background_color="white", colormap="Dark2",
+               max_font_size=150, random_state=42)
+        wc.generate_from_frequencies(words)
+        fig = Figure()
+        axis = fig.add_subplot(1,1,1)
+        axis.imshow(wc, interpolation="bilinear")
+        axis.axis('off')
+        image = encodeFig(fig)
     except Exception:
         validArgs = False
 
-    wc = WordCloud(background_color="white", colormap="Dark2",
-               max_font_size=150, random_state=42)
-    wc.generate_from_frequencies(words)
-    fig = Figure()
-    axis = fig.add_subplot(1,1,1)
-    axis.imshow(wc, interpolation="bilinear")
-    axis.axis('off')
-
     html = render_template('show_word_cloud.html',
         validArgs = validArgs,
-        image= encodeFig(fig))
+        image= image)
     db.disconnect()
     return make_response(html)
 

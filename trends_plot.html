@@ -1,1 +1,15 @@
+<center>
+{% if rejects|length%}
+<div class="alert alert-warning" role="alert">
+    <strong>
+        The following words either don't occur in the data or occur fewer than 20 times.
+        <br>
+        ({{rejects[0]}})
+        {%for r in rejects[1:]%}
+            ,{{r}}&#160;
+        {%endfor%}
+    </strong> 
+</div>
+{%endif%}
 {{image}}
+<center>
