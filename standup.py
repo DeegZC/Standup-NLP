@@ -150,7 +150,7 @@ def plotTrends():
         x = [year for year in list(data.keys()) if data[year]]
         y = [data[year] for year in x]
         for year in x:
-            axis.annotate(int(WPY[year]*data[year]), year, data['year'])
+            axis.annotate(int(WPY[year]*data[year]), year, data[year])
         axis.plot(x,y)
     axis.legend(list(words.keys()))
     return make_response(render_template('trends_plot.html',
