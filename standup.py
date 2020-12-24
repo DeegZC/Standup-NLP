@@ -100,7 +100,9 @@ def trends():
 
 @app.route('/plotTrends', methods=['GET','POST'])
 def plotTrends():
+    db.connect()
     img = db.getTrends(request.form.get('words'))
+    db.disconnect()
     return make_response(render_template('trends_plot.html',
         image = img))
 
