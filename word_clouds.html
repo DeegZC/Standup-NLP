@@ -15,19 +15,14 @@
         <h1>Word Cloud Generator</h1>        
         <div class="row">
             <div class="col-sm-4">
-                <h3>Threshold <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" 
-                data-placement="bottom" title="Filters out the top n words used by all comedians. (Must be in the interval 0 to 250)"></span></h3>
-            </div>
-            <div class="col-sm-4">
-                <h3>Comedian</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
+                <h3 display='inline'>Threshold </h3><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" 
+                data-placement="bottom" title="Filters out the top n words used by all comedians. (Must be in the interval 0 to 250)"></span>
+            <br>
                 <input type='number' id="threshold" step='1' min='0' max='250'
                         value="{{default_threshold}}" style='color:black; border-radius:4px;'></input>
             </div>
             <div class="col-sm-4">
+                <h3>Comedian</h3>
                 <select id='name' style='color:black; border-radius:4px;'>
                     {%for n in names%}
                     <option value='{{n}}'>{{n.title()}}</option>
@@ -35,7 +30,7 @@
                 </select>
             </div>
             <div class="col-sm-4">
-              <button type="button" class="btn btn-success btn-lg" id='submit'>Generate</button>
+              <button type="button" class="btn btn-lg" id='submit' style="background-color: #cc6600; color: white;border:2px solid black;">Generate</button>
             </div>
         </div>
         <br>

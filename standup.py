@@ -15,6 +15,7 @@ import time
 from wordcloud import WordCloud
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
 #-----------------------------------------------------------------------
 # cloudinary.config()
 
@@ -24,7 +25,6 @@ from flask import send_from_directory
 app = Flask(__name__, template_folder='.')
 app.config.from_object(Config)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 
 db = Database(app)
 
@@ -94,13 +94,26 @@ def wordClouds():
 def pca():
     return make_response(render_template('pca.html'))
 
+@app.route('/trends', methods=['GET','POST'])
+def trends():
+    return make_response(render_template('trends.html'))
+
+@app.route('/plotTrends', methods=['GET','POST'])
+def plotTrends():
+    img = db.getTrends(request.form.get('words'))
+    return make_response(render_template('trends_plot.html',
+        image = img))
+
 @app.route('/makeWordCloud', methods=['GET','POST'])
 def makeWordCloud():
     db.connect()
     validArgs = True
     words = []
     try:
-        words = db.makeWordCloud(request.form.get('name'), int(request.form.get('threshold')))
+        thresh = int(request.form.get('threshold'))
+        if thresh > 250:
+            raise Exception
+        words = db.makeWordCloud(request.form.get('name'), thresh)
     except Exception:
         validArgs = False
 

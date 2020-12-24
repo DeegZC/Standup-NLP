@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <title>Standup NLP</title>
+</head>
+
+<body>
+    {% include 'nav.html' %}
+</body>
+
+<div class="column">
+    <div class="container bg-primary" style='border-radius:10px'>
+         <center>
+        <h1>Word Trends over Time</h1>
+        </center>
+        <div class="row">
+        <div class="col-sm-12">
+            <textarea type="text" id="words" placeholder="Enter comma separated words to plot.&#10;
+            (e.g. mother, father, family)" rows="4" cols="50"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class='col-sm-4'>
+        </div>
+        <div class='col-sm-4'>
+            <button type="button" id='submit' class="btn btn-lg btn-block" id='submit' style="background-color: #cc6600; color: white;border:2px solid black;">Plot Trends</button>
+        </div>
+        </center>
+      </div>
+    </div>
+    <br>
+    <div class='container'>
+    <br>
+    </div>
+    <span id='plotSpan'></span>
+</div>
+{%include 'footer.html'%}
+<script>
+    'use strict';
+
+    function handleResponse(response) {
+    $('#plotSpan').html(response);
+    }
+
+    let requestRecs = null;
+
+    function getResults() {
+        console.log('getting results')
+        let url = '/plotTrends';
+
+        let data = {};
+        data['words'] = $('#words').val()
+
+        if (requestRecs != null)
+            requestRecs.abort();
+
+        console.log(data)
+        requestRecs = $.ajax(
+            {
+            type: 'POST',
+            url: url,
+            data: data,
+            success: handleResponse
+            }
+        );
+    }
+
+    function setup() {
+    $('#submit').on('click', getResults);
+    }
+
+    $('document').ready(setup);
+</script>
+
+</html>

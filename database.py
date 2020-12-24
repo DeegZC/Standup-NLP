@@ -6,9 +6,11 @@
 #-----------------------------------------------------------------------
 
 from com import Com
+from trends import Trend
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 import string
+import matplotlib.pyplot as plt
 #-----------------------------------------------------------------------
 STOP_WORDS = ['the', 'you', 'and', 'to', 'like', 'that', 'it', 'of', 'in', 'was', 
 'is', 'my', 'im', 'know', 'this', 'on', 'its', 'just', 'what', 'me', 'dont', 'they', 
@@ -63,9 +65,9 @@ class Database:
     def searchComs(self, fname, lname, key, order):
         hits = self.session.query(Com).all()
         if fname:
-            hits = [h for h in hits if fname.lower() in h.name.split(' ')[0]]
+            hits = [h for h in hits if fname.strip().lower() in h.name.split(' ')[0]]
         if lname:
-            hits = [h for h in hits if lname.lower() in h.name.split(' ')[-1]]
+            hits = [h for h in hits if lname.strip().lower() in h.name.split(' ')[-1]]
 
         sorts = {'alpha':lambda x: x.name,
             'age':lambda x: 2020-int(x.yob),
@@ -104,3 +106,13 @@ class Database:
         for t in top:
             freq_dict[t[0]] = t[1]
         return freq_dict
+
+    def getTrends(self, words):
+        words = [w.strip() for w in words.split(',')]
+        plt.style.use('fivethirtyeight')
+        results = []
+        for w in words:
+            trend = self.session.query(Trend).filter(Trend.word == w).all()
+            if trend:
+                results.append(trend[0])
+        return results
