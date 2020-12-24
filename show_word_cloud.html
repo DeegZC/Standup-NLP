@@ -1,8 +1,13 @@
 {% if validArgs == False%}
-<div class="alert alert-warning" role="alert"><strong>
+<div class="container alert alert-warning" role="alert">
+    <strong>
         Your Parameters are Invalid!<br>
-        Make sure that Threshold is an Integer from 0 to 250.
-    </strong> </div>
+    </strong> 
+        Make sure that Threshold is an integer from 0 to 250.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 {%else%}
 <center>
 <br>
