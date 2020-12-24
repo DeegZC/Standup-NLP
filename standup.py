@@ -18,7 +18,47 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 #-----------------------------------------------------------------------
 # cloudinary.config()
-
+WPY = {1965: 11563,
+ 1971: 5032,
+ 1977: 10099,
+ 1978: 10683,
+ 1979: 9442,
+ 1982: 8767,
+ 1983: 25302,
+ 1984: 7595,
+ 1986: 10099,
+ 1987: 13565,
+ 1988: 6722,
+ 1990: 7704,
+ 1991: 9936,
+ 1992: 11414,
+ 1993: 16362,
+ 1994: 11351,
+ 1996: 15557,
+ 1997: 11319,
+ 1998: 18274,
+ 1999: 39262,
+ 2000: 14378,
+ 2001: 7795,
+ 2002: 11031,
+ 2003: 3253,
+ 2004: 37441,
+ 2005: 17086,
+ 2006: 47256,
+ 2007: 59758,
+ 2008: 36219,
+ 2009: 55173,
+ 2010: 104077,
+ 2011: 72382,
+ 2012: 103717,
+ 2013: 132075,
+ 2014: 106381,
+ 2015: 149635,
+ 2016: 220546,
+ 2017: 337007,
+ 2018: 311841,
+ 2019: 268951,
+ 2020: 157435}
 #-----------------------------------------------------------------------
 import os
 from flask import send_from_directory
@@ -106,11 +146,13 @@ def plotTrends():
     db.disconnect()
     fig = Figure()
     axis = fig.add_subplot(1,1,1)
-    for w in words:
-        x = [year for year in list(w.keys()) if w[year]]
-        y = [w[year] for year in x]
+    for data in words.values():
+        x = [year for year in list(data.keys()) if data[year]]
+        y = [data[year] for year in x]
+        for year in x:
+            axis.annotate(int(WPY[year]*data[year]), year, data['year'])
         axis.plot(x,y)
-        axis.legend(words)
+    axis.legend(list(words.keys()))
     return make_response(render_template('trends_plot.html',
         image = encodeFig(fig),
         rejects = rejects))

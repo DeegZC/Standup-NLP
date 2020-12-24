@@ -109,12 +109,12 @@ class Database:
 
     def getTrends(self, words):
         words = [w.strip() for w in words.split(',')]
-        results = []
+        results = {}
         rejects = []
         for w in words:
             trend = self.session.query(Trend).filter(Trend.word == w).all()
             if trend:
-                results.append(trend[0].toDict())
+                results[w] = trend[0].toDict()
             else:
                 rejects.append(w)
         return results, rejects
