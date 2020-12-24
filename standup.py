@@ -141,20 +141,34 @@ def trends():
 
 @app.route('/plotTrends', methods=['GET','POST'])
 def plotTrends():
-    db.connect()
-    words, rejects = db.getTrends(request.form.get('words'))
-    db.disconnect()
-    fig = Figure()
-    axis = fig.add_subplot(1,1,1)
-    for data in words.values():
-        x = [year for year in list(data.keys()) if data[year]]
-        y = [data[year] for year in x]
-        for year in x:
-            axis.annotate(int(WPY[year]*data[year]), (year, data[year]))
-        axis.plot(x,y)
-    axis.legend(list(words.keys()))
+    validYears = True
+    rejects = []
+    fig = 0
+    try:
+        lower = int(request.form.get('lower'))
+        upper = int(request.form.get('upper'))
+        if lower > upper or lower > 2020 or lower < 1965 or upper > 2020 or lower < 1965:
+            raise Exception
+        db.connect()
+        words, rejects = db.getTrends(request.form.get('words'))
+        db.disconnect()
+        fig = Figure()
+        axis = fig.add_subplot(1,1,1)
+        for data in words.values():
+            x = [year for year in list(data.keys()) if data[year] and year >= lower and year <= upper]
+            y = [10*data[year] for year in x]
+            for year in x:
+                axis.annotate(int(WPY[year]*data[year]), (year, data[year]))
+            axis.plot(x,y)
+        axis.legend(list(words.keys()))
+        axis.set_xlabel('Year')
+        axis.set_ylabel('Percentage of Words that Year')
+    except Exception:
+        validYears = False
+
     return make_response(render_template('trends_plot.html',
         image = encodeFig(fig),
+        validYears = validYears,
         rejects = rejects))
 
 @app.route('/makeWordCloud', methods=['GET','POST'])

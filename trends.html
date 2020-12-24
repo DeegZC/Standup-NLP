@@ -13,11 +13,25 @@
     <div class="container bg-primary" style='border-radius:10px'>
          <center>
         <h1>Word Trends over Time</h1>
-        
+        <br>
             <textarea type="text" id="words" placeholder="Enter comma separated words to plot.&#10;
             (e.g. mother, father, family)" rows="4" cols="50" style='color:black'></textarea>
-    
         </center>
+        <h3>Year Range<span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" 
+                    data-placement="right" title="Lower bound: 1965, Upper bound: 2020"></span></h3>
+      <div class="row">
+        <div class='col-sm-3'>
+        </div>
+        <div class='col-sm-3'>
+            <h4>From</h4>
+            <input type='number' id="lower" step='1' min='1965' max='2020'
+                        value="2000" style='color:black; border-radius:4px;'></input>
+        </div>
+        <div class='col-sm-3'>
+            <h4>To</h4>
+            <input type='number' id="upper" step='1' min='1965' max='2020'
+                        value="2020" style='color:black; border-radius:4px;'></input>
+        </div>
       <div class="row">
         <div class='col-sm-4'>
         </div>
@@ -50,6 +64,8 @@
 
         let data = {};
         data['words'] = $('#words').val()
+        data['lower'] = $('#lower').val()
+        data['upper'] = $('#upper').val()
 
         if (requestRecs != null)
             requestRecs.abort();
@@ -70,6 +86,10 @@
     }
 
     $('document').ready(setup);
+
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 
 </html>
