@@ -137,6 +137,7 @@ def trends():
 @app.route('/plotTrends', methods=['GET','POST'])
 def plotTrends():
     validYears = True
+    word_error = ''
     rejects = []
     fig = 0
     try:
@@ -146,6 +147,8 @@ def plotTrends():
             raise Exception
         db.connect()
         words, rejects = db.getTrends(request.form.get('words'))
+        if not words:
+            word_error = 'No words found in the input area.'
         db.disconnect()
         fig = Figure()
         axis = fig.add_subplot(1,1,1)
@@ -165,6 +168,7 @@ def plotTrends():
     return make_response(render_template('trends_plot.html',
         image = encodeFig(fig),
         validYears = validYears,
+        err=word_error,
         rejects = rejects))
 
 @app.route('/makeWordCloud', methods=['GET','POST'])

@@ -1,15 +1,21 @@
 <center>
 {%if validYears%}
-    {% if rejects|length%}
+    {% if rejects|length || err%}
     <div class="container alert alert-warning" role="alert">
         <strong>
+        {%if rejects|length%}
             The following words either don't occur in the data or occur fewer than 20 times.
-        </strong> 
+        {%else%}
+            {{err}}
+        {%endif%}
+        </strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        {%if rejects|length%}
         <br>
             ({{rejects[0]}}{%for r in rejects[1:]%}&#160;,{{r}}{%endfor%})
+        {%endif%}
     </div>
     {%endif%}
     <img src="{{image}}" style ='border: 5px solid black; object-fit:contain;'/>
