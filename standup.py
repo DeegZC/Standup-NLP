@@ -162,11 +162,12 @@ def plotTrends():
         axis.set_xlabel('Year')
         axis.axis('on')
         axis.set_ylabel('Percentage of Words that Year')
+        fig = encodeFig(fig)
     except Exception:
         validYears = False
 
     return make_response(render_template('trends_plot.html',
-        image = encodeFig(fig),
+        image = fig,
         validYears = validYears,
         err=word_error,
         rejects = rejects))
