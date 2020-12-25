@@ -1,15 +1,30 @@
 <center>
-{% if rejects|length%}
-<div class="container alert alert-warning" role="alert">
-    <strong>
-        The following words either don't occur in the data or occur fewer than 20 times.
-    </strong> 
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <br>
-        ({{rejects[0]}}{%for r in rejects[1:]%}&#160;,{{r}}{%endfor%})
-</div>
+{%if validYears%}
+    {% if rejects|length%}
+    <div class="container alert alert-warning" role="alert">
+        <strong>
+            The following words either don't occur in the data or occur fewer than 20 times.
+        </strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <br>
+            ({{rejects[0]}}{%for r in rejects[1:]%}&#160;,{{r}}{%endfor%})
+    </div>
+    {%endif%}
+    <img src="{{image}}" style ='border: 5px solid black; object-fit:contain;'/>
+{%else%}
+    <div class="container alert alert-warning" role="alert">
+        <strong>
+            Invalid Years
+        </strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <br>
+            Check that both bounds are integers in the range from 1965 to 2020.
+        <br>
+            Also, make sure that the lower bound year isn't greater than the upper bound
+    </div>
 {%endif%}
-<img src="{{image}}" style ='border: 5px solid black; object-fit:contain;'/>
 <center>

@@ -151,12 +151,13 @@ def plotTrends():
         axis = fig.add_subplot(1,1,1)
         for data in words.values():
             x = [year for year in list(data.keys()) if data[year] and year >= lower and year <= upper]
-            y = [10*data[year] for year in x]
+            y = [100*data[year] for year in x]
             for year in x:
-                axis.annotate(int(WPY[year]*data[year]), (year, data[year]))
+                axis.annotate(int(WPY[year]*data[year]), (year, 100*data[year]))
             axis.plot(x,y)
         axis.legend(list(words.keys()))
         axis.set_xlabel('Year')
+        axis.axis('on')
         axis.set_ylabel('Percentage of Words that Year')
     except Exception:
         validYears = False
