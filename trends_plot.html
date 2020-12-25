@@ -1,6 +1,6 @@
 <center>
 {%if validYears%}
-    {% if rejects|length || err%}
+    {% if rejects|length or err%}
     <div class="container alert alert-warning" role="alert">
         <strong>
         {%if rejects|length%}
