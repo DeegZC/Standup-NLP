@@ -16,6 +16,8 @@ from wordcloud import WordCloud
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+rcParams.update({'figure.autolayout': True})
 #-----------------------------------------------------------------------
 # cloudinary.config()
 WPY = {1965: 11563,
@@ -68,13 +70,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 plt.style.use('fivethirtyeight')
 
 db = Database(app)
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
-    
-#-----------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
