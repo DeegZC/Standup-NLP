@@ -156,7 +156,7 @@ def plotTrends():
             x = [year for year in list(data.keys()) if data[year] and year >= lower and year <= upper]
             y = [100*data[year] for year in x]
             for year in x:
-                axis.annotate(int(WPY[year]*data[year]), (year, 100*data[year]))
+                axis.annotate(round(WPY[year]*data[year]), (year, 100*data[year]))
             axis.plot(x,y)
         axis.legend(list(words.keys()))
         axis.set_xlabel('Year')
